@@ -1,6 +1,28 @@
 // Déclenchement de l'événement quand le document HTML est complètement chargé
 document.addEventListener("DOMContentLoaded", () => {
-  //Definition  URL API
+  // Filtres de la galerie
+  const apiCategories = "http://localhost:5678/api/categories";
+  const filterContainer = document.getElementById("filterContainer");
+
+  fetch(apiCategories)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Network response is not ok");
+      }
+      return response.json();
+    })
+    .then((data) => {
+      data.map((item) => {
+        const button = document.createElement("button");
+        button.textContent = item.name;
+        button.id = "button" + item.id;
+
+        filterContainer.appendChild(button);
+      });
+    })
+    .catch((error) => console.error("Error :", error));
+
+  //Definition URL API Works
   const apiUrl = "http://localhost:5678/api/works";
   const cardContainer = document.getElementById("cardContainer");
 
@@ -33,3 +55,7 @@ document.addEventListener("DOMContentLoaded", () => {
       console.error("Error :", error);
     });
 });
+
+// 1. Créer un filtre (sur la création de la gallery (ou card))
+// 2. Doit être basé sur le bouton actif -- Bouton "Tous" actif par défaut
+// 3. Gérer les clicks -- addEventListener

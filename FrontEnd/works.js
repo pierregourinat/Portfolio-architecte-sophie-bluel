@@ -28,6 +28,10 @@ document.addEventListener("DOMContentLoaded", () => {
         //Pour chaque bouton, créer un écouteur d'événement
         button.addEventListener("click", () => {
           const category = button.textContent; //Récupération du texte du bouton cliqué
+          filterButtons.forEach((btn) => {
+            btn.classList.remove("button_selected");
+            button.classList.add("button_selected");
+          });
 
           filter(category); // Filtrer les images en fonction de la category sélectionnée
         });

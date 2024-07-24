@@ -225,7 +225,7 @@ button {
   background-color: white;
 }
 
-button:active {
+.button_selected {
   background-color: #1d6154;
   color: white;
 }

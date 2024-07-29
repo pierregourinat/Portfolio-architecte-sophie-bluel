@@ -1,97 +1,94 @@
-// Déclenchement de l'événement quand le document HTML est complètement chargé
 document.addEventListener("DOMContentLoaded", () => {
-  // Filtres de la galerie
   const apiCategories = "http://localhost:5678/api/categories";
+  const apiUrl = "http://localhost:5678/api/works";
+  const cardContainer = document.getElementById("cardContainer");
   const filterContainer = document.getElementById("filterContainer");
+  let category = "";
 
-  //Récupération des catégories de l'API
   fetch(apiCategories)
     .then((response) => {
       if (!response.ok) {
-        throw new Error("Network response is not ok");
+        throw new Error("Network error");
       }
       return response.json();
     })
     .then((data) => {
+      // Création des boutons en fonction des catégories récupérées sur l'API
       data.map((item) => {
-        //Créer un bouton pour chaque catégories
         const button = document.createElement("button");
         button.textContent = item.name;
         button.id = "button" + item.id;
 
         filterContainer.appendChild(button);
       });
+
       const filterButtons = document.querySelectorAll(
         "#filterContainer button"
       );
-      filterButtons.forEach((button) => {
-        //Pour chaque bouton, créer un écouteur d'événement
+      // Boucle qui gère les clics sur les boutons
+      filterButtons.forEach((button) =>
         button.addEventListener("click", () => {
-          const category = button.textContent; //Récupération du texte du bouton cliqué
+          category = button.textContent;
+          console.log("category updated to :", category);
           filterButtons.forEach((btn) => {
             btn.classList.remove("button_selected");
-            button.classList.add("button_selected");
           });
+          button.classList.add("button_selected");
+          createCards();
+        })
+      );
 
-          filter(category); // Filtrer les images en fonction de la category sélectionnée
+      // Gestion du bouton "Tous"
+      const button0 = document.getElementById("button0");
+      button0.addEventListener("click", () => {
+        category = "";
+        filterButtons.forEach((btn) => {
+          btn.classList.remove("button_selected");
         });
+        button0.classList.add("button_selected");
+        createCards();
       });
+      // Initialisation des cartes lors du premier chargement
+      createCards();
     })
-    .catch((error) => console.error("Error :", error));
+    .catch((error) => console.log("Error: ", error));
 
-  //Definition URL API Works
-  const apiUrl = "http://localhost:5678/api/works";
-  const cardContainer = document.getElementById("cardContainer");
+  // Affichage des travaux (cards) en fonction du filtre sélectionné
+  function createCards() {
+    fetch(apiUrl)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network error");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        let filteredData = "";
+        if (category) {
+          filteredData = data.filter((item) => item.category.name === category);
+        } else {
+          filteredData = data;
+        }
+        // Vider le container pour afficher le nouveau contenu
+        cardContainer.innerHTML = "";
 
-  // Fetch de l'API pour récupérer les ressources Works
-  fetch(apiUrl)
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("Network response is not ok");
-      }
-      return response.json();
-    })
-    // Méthode map pour créer un tableau avec les résultats de l'appel d'une fonction
-    .then((data) => {
-      data.map((item) => {
-        const figure = document.createElement("figure");
-        const img = document.createElement("img");
-        img.src = item.imageUrl;
-        img.alt = item.title;
-        img.setAttribute("data-category", item.category.name); // Stockage des catégories de chaque image
-        console.log(item.category.name);
-        const figcaption = document.createElement("figcaption");
-        figcaption.textContent = item.title;
-        figure.dataset.category = item.category.name; // Ajout de la catégorie de l'image à l'attribut data-category de l'élément figure
+        // Afficher les cartes filtrées
+        filteredData.map((item) => {
+          const figure = document.createElement("figure");
+          const img = document.createElement("img");
 
-        figure.appendChild(img);
-        figure.appendChild(figcaption);
+          img.src = item.imageUrl;
+          img.alt = item.title;
 
-        cardContainer.appendChild(figure);
-      });
-    })
-    // Catch les erreurs du code précédemment écrit
-    .catch((error) => {
-      console.error("Error :", error);
-    });
+          const figcaption = document.createElement("figcaption");
+          figcaption.textContent = item.title;
 
-  function filter(category) {
-    console.log("Filtrer des images par catégorie :", category);
+          figure.appendChild(img);
+          figure.appendChild(figcaption);
 
-    const galleryItems = document.querySelectorAll("#cardContainer figure");
-
-    galleryItems.forEach((item) => {
-      const itemCategory = item.dataset.category;
-
-      if (itemCategory === category || category === "Tous") {
-        item.style.display = "block";
-      } else {
-        item.style.display = "none";
-      }
-    });
+          cardContainer.appendChild(figure);
+        });
+      })
+      .catch((error) => console.log("Error: ", error));
   }
 });
-
-// 1. Créer un filtre (sur la création de la gallery (ou card))
-// 2. Doit être basé sur le bouton actif -- Bouton "Tous" actif par défaut
-// 3. Gérer les clicks -- addEventListener

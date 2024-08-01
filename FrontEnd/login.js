@@ -14,16 +14,25 @@ document.addEventListener("DOMContentLoaded", () => {
       headers: {
         "Content-type": "application/json",
       },
-      body: JSON.stringify({ emailLogin, passwordLogin }),
+      body: JSON.stringify({ email: emailLogin, password: passwordLogin }),
     })
-      .then(response.json())
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network error");
+        }
+        return response.json();
+      })
       .then((data) => {
         if (data.token) {
           localStorage.setItem("authToken", data.token);
-          window.location.href = "/users/admin";
+          window.location.href = "index.html";
         } else {
-          alert("Erreur de connexion");
+          alert("Erreur de connexion. Veuillez vérifier vos identifiants");
         }
+      })
+      .catch((error) => {
+        console.error("Erreur lors de la connexion:", error);
+        alert("Erreur lors de la connexion. Veuillez réessayer.");
       });
   });
 });

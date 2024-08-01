@@ -4,6 +4,21 @@ document.addEventListener("DOMContentLoaded", () => {
   const cardContainer = document.getElementById("cardContainer");
   const filterContainer = document.getElementById("filterContainer");
   let category = "";
+  let cardList = [];
+
+  if (cardList) {
+    fetch(apiUrl)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network error");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        cardList = data;
+      })
+      .catch((error) => console.log("Error: ", error));
+  }
 
   fetch(apiCategories)
     .then((response) => {
@@ -53,42 +68,110 @@ document.addEventListener("DOMContentLoaded", () => {
     })
     .catch((error) => console.log("Error: ", error));
 
-  // Affichage des travaux (cards) en fonction du filtre sélectionné
   function createCards() {
-    fetch(apiUrl)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network error");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        let filteredData = "";
-        if (category) {
-          filteredData = data.filter((item) => item.category.name === category);
-        } else {
-          filteredData = data;
-        }
-        // Vider le container pour afficher le nouveau contenu
-        cardContainer.innerHTML = "";
+    let filteredData = [];
+    if (category) {
+      filteredData = cardList.filter((item) => item.category.name === category);
+    } else {
+      filteredData = cardList;
+    }
 
-        // Afficher les cartes filtrées
-        filteredData.map((item) => {
-          const figure = document.createElement("figure");
-          const img = document.createElement("img");
+    // Vider le container pour afficher le nouveau contenu
+    cardContainer.innerHTML = "";
 
-          img.src = item.imageUrl;
-          img.alt = item.title;
+    // Afficher les cartes filtrées
+    filteredData.map((item) => {
+      const figure = document.createElement("figure");
+      const img = document.createElement("img");
 
-          const figcaption = document.createElement("figcaption");
-          figcaption.textContent = item.title;
+      img.src = item.imageUrl;
+      img.alt = item.title;
 
-          figure.appendChild(img);
-          figure.appendChild(figcaption);
+      const figcaption = document.createElement("figcaption");
+      figcaption.textContent = item.title;
 
-          cardContainer.appendChild(figure);
-        });
-      })
-      .catch((error) => console.log("Error: ", error));
+      figure.appendChild(img);
+      figure.appendChild(figcaption);
+
+      cardContainer.appendChild(figure);
+    });
   }
+
+  //-----------ADMIN LOGIN SECTION----------//
+
+  // LocalStorage du token d'authentification
+  const authToken = localStorage.getItem("authToken");
+  console.log(authToken);
+  const linkLogout = document.getElementById("linkLogout");
+  const linkLogin = document.getElementById("linkLogin");
+
+  if (authToken) {
+    // Admin est connecté
+    linkLogout.classList.remove("d-none");
+    linkLogin.classList.add("d-none");
+  } else {
+    // Admin n'est pas connecté
+    linkLogout.classList.add("d-none");
+    linkLogin.classList.remove("d-none");
+  }
+
+  // IDENTIFIANTS
+  // email: sophie.bluel@test.tld
+
+  // password: S0phie
+
+  //  TODO Recup le lien à masquer > ajouter une classe "d-none" > dans le CSS je défini cette classe en display none
 });
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// DELETE /works/{id}
+
+function deleteImage(buttonId) {
+  const imageId = buttonId.replace("deleteButton", "");
+  const deleteUrl = apiUrl + "/" + imageId;
+
+  fetch(deleteUrl, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      // "Authorization": `Bearer ${localStorage.getItem("authToken")}`
+    },
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Network error");
+      }
+      return response.json();
+    })
+    .then(() => {
+      console.log(`Image with ID ${id} deleted succesfully.`);
+      createCards();
+    })
+    .catch((error) => {
+      console.error("Error deleting image", error);
+    });
+}
+
+function createCardsModal() {
+  cardList.map((item) => {
+    const figure = document.createElement("figure");
+    const img = document.createElement("img");
+    const deleteButton = document.createElement("button");
+
+    img.src = item.imageUrl;
+    img.alt = item.title;
+
+    deleteButton.id = `deleteButton${item.id}`;
+    deleteButton.addEventListener("click", () => deleteImage(deleteButton.id));
+
+    figure.appendChild(img);
+    figure.appendChild(deleteButton);
+
+    cardContainer.appendChild(figure);
+
+    // <figure>
+    //   <img src="item.imageUrl" alt=" item.title"></img>
+    //   <button id="deleteButton2" onClick={deleteImage(id)}></button>
+    // </figure>
+  });
+}

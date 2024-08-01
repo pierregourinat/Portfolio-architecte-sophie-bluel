@@ -193,6 +193,11 @@ nav li {
 li:hover {
   color: #b1663c;
 }
+
+.d-none {
+  display: none;
+}
+
 #introduction {
   display: flex;
   align-items: center;

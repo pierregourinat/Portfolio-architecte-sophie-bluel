@@ -12,6 +12,7 @@
     />
     <meta name="description" content="" />
     <link rel="stylesheet" href="./assets/style.css" />
+    <script src="login.js"></script>
   </head>
   <body id="bodyLogin">
     <header>
@@ -28,13 +29,12 @@
     <main>
       <section id="contact">
         <h2>Log In</h2>
-        <p>Vous avez un projet ? Discutons-en !</p>
-        <form action="#" method="post">
-          <label for="name">Nom</label>
-          <input type="text" name="name" id="name" />
+        <form id="formLogin" action="#" method="post" autocomplete="off">
           <label for="email">Email</label>
-          <input type="email" name="email" id="email" />
-          <input type="submit" value="Envoyer" />
+          <input type="email" name="email" id="email" required />
+          <label for="password">Mot de passe</label>
+          <input type="password" name="password" id="password" required />
+          <input type="submit" value="Se connecter" />
         </form>
       </section>
     </main>

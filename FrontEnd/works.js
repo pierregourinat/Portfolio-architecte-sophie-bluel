@@ -101,27 +101,41 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // LocalStorage du token d'authentification
   const authToken = localStorage.getItem("authToken");
-  console.log(authToken);
+
   const linkLogout = document.getElementById("linkLogout");
   const linkLogin = document.getElementById("linkLogin");
+  const editButton = document.getElementById("editButton");
+  const editModBar = document.getElementById("editMod");
+  const editButtonIcon = document.getElementById("editButtonIcon");
 
   if (authToken) {
     // Admin est connecté
-    linkLogout.classList.remove("d-none");
     linkLogin.classList.add("d-none");
+    filterContainer.classList.add("d-none");
+    editButtonIcon.classList.remove("d-none");
+    linkLogout.classList.remove("d-none");
+    editButton.classList.remove("d-none");
+    editModBar.classList.remove("d-none");
   } else {
     // Admin n'est pas connecté
-    linkLogout.classList.add("d-none");
     linkLogin.classList.remove("d-none");
+    filterContainer.classList.remove("d-none");
+    editButtonIcon.classList.add("d-none");
+    linkLogout.classList.add("d-none");
+    editButton.classList.add("d-none");
+    editModBar.classList.add("d-none");
   }
-
-  // IDENTIFIANTS
-  // email: sophie.bluel@test.tld
-
-  // password: S0phie
-
-  //  TODO Recup le lien à masquer > ajouter une classe "d-none" > dans le CSS je défini cette classe en display none
+  console.log("linkLogin classes:", linkLogin.className);
+  console.log("filterContainer classes:", filterContainer.className);
+  console.log("linkLogout classes:", linkLogout.className);
+  console.log("editButton classes:", editButton.className);
+  console.log("editModBar classes:", editModBar.className);
 });
+
+// IDENTIFIANTS
+// email: sophie.bluel@test.tld
+
+// password: S0phie
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // DELETE /works/{id}

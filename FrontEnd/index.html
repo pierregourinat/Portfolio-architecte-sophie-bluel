@@ -14,8 +14,16 @@
     <link rel="stylesheet" href="./assets/style.css" />
     <script src="works.js"></script>
     <script src="logout.js"></script>
+    <script
+      src="https://kit.fontawesome.com/839a3db2e2.js"
+      crossorigin="anonymous"
+    ></script>
   </head>
   <body>
+    <div id="editMod" class="d-none">
+      <i class="fa-regular fa-pen-to-square"></i>
+      <p>Mode édition</p>
+    </div>
     <header>
       <h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
       <nav>
@@ -54,6 +62,10 @@
       </section>
       <section id="portfolio">
         <h2>Mes Projets</h2>
+        <div id="editButtonContainer">
+          <i class="fa-regular fa-pen-to-square d-none" id="editButtonIcon"></i>
+          <button id="editButton" class="d-none">modifier</button>
+        </div>
         <div id="filterContainer">
           <button class="button_selected" id="button0">Tous</button>
         </div>

@@ -220,11 +220,8 @@ li:hover {
   color: #b1663c;
 }
 
-.d-none,
-#filterContainer.d-none,
-#editMod.d-none,
-#editButtonIcon.d-none {
-  display: none;
+.d-none {
+  display: none !important;
 }
 
 #introduction {
@@ -275,6 +272,8 @@ li:hover {
 }
 
 .modalWrapper {
+  display: flex;
+  justify-content: center;
   background-color: #fefefe;
   margin: 15% auto;
   padding: 20px;

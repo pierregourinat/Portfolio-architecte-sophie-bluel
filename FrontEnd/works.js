@@ -142,9 +142,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const closeModalIcon = document.getElementById("closeModalIcon");
 
   editButton.addEventListener("click", () => {
-    modalOverlay.style.display = "block";
+    modalOverlay.classList.remove("d-none");
   });
   closeModalIcon.addEventListener("click", () => {
-    modalOverlay.style.display = "none";
+    modalOverlay.classList.add("d-none");
   });
 });

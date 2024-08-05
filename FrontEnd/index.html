@@ -61,10 +61,24 @@
         </article>
       </section>
       <section id="portfolio">
-        <h2>Mes Projets</h2>
-        <div id="editButtonContainer">
-          <i class="fa-regular fa-pen-to-square d-none" id="editButtonIcon"></i>
-          <button id="editButton" class="d-none">modifier</button>
+        <div id="headerGallery">
+          <h2>Mes Projets</h2>
+          <div id="editButtonContainer">
+            <i
+              class="fa-regular fa-pen-to-square d-none"
+              id="editButtonIcon"
+            ></i>
+            <button id="editButton" class="d-none">modifier</button>
+            <aside id="modalOverlay" class="modal">
+              <div id="modalWrapper" class="modalWrapper">
+                <i id="closeModalIcon" class="fa-solid fa-xmark"></i>
+                <h3>Galerie photo</h3>
+                <button id="addPhotoBtn" class="modalBtn">
+                  Ajouter une photo
+                </button>
+              </div>
+            </aside>
+          </div>
         </div>
         <div id="filterContainer">
           <button class="button_selected" id="button0">Tous</button>

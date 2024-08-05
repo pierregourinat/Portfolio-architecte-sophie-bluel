@@ -125,67 +125,26 @@ document.addEventListener("DOMContentLoaded", () => {
     editButton.classList.add("d-none");
     editModBar.classList.add("d-none");
   }
+
+  // IDENTIFIANTS
+  // email: sophie.bluel@test.tld
+  // password: S0phie
+
   console.log("linkLogin classes:", linkLogin.className);
   console.log("filterContainer classes:", filterContainer.className);
   console.log("linkLogout classes:", linkLogout.className);
   console.log("editButton classes:", editButton.className);
   console.log("editModBar classes:", editModBar.className);
-});
 
-// IDENTIFIANTS
-// email: sophie.bluel@test.tld
+  // GESTION DE LA MODAL AJOUT DE PHOTO ------------------------------------------------------------------
 
-// password: S0phie
+  const modalOverlay = document.getElementById("modalOverlay");
+  const closeModalIcon = document.getElementById("closeModalIcon");
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// DELETE /works/{id}
-
-function deleteImage(buttonId) {
-  const imageId = buttonId.replace("deleteButton", "");
-  const deleteUrl = apiUrl + "/" + imageId;
-
-  fetch(deleteUrl, {
-    method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-      // "Authorization": `Bearer ${localStorage.getItem("authToken")}`
-    },
-  })
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("Network error");
-      }
-      return response.json();
-    })
-    .then(() => {
-      console.log(`Image with ID ${id} deleted succesfully.`);
-      createCards();
-    })
-    .catch((error) => {
-      console.error("Error deleting image", error);
-    });
-}
-
-function createCardsModal() {
-  cardList.map((item) => {
-    const figure = document.createElement("figure");
-    const img = document.createElement("img");
-    const deleteButton = document.createElement("button");
-
-    img.src = item.imageUrl;
-    img.alt = item.title;
-
-    deleteButton.id = `deleteButton${item.id}`;
-    deleteButton.addEventListener("click", () => deleteImage(deleteButton.id));
-
-    figure.appendChild(img);
-    figure.appendChild(deleteButton);
-
-    cardContainer.appendChild(figure);
-
-    // <figure>
-    //   <img src="item.imageUrl" alt=" item.title"></img>
-    //   <button id="deleteButton2" onClick={deleteImage(id)}></button>
-    // </figure>
+  editButton.addEventListener("click", () => {
+    modalOverlay.style.display = "block";
   });
-}
+  closeModalIcon.addEventListener("click", () => {
+    modalOverlay.style.display = "none";
+  });
+});

@@ -273,23 +273,64 @@ li:hover {
 
 .modalWrapper {
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
   background-color: #fefefe;
   margin: 15% auto;
-  padding: 20px;
+  padding: 10%;
   width: 80%;
   max-width: 630px;
   position: relative;
+  border-radius: 10px;
+  gap: 25px;
 }
 
-.modal h2 {
+.modalWrapper h3 {
   margin-top: 0;
   font-size: 26px;
 }
 
-.modalBtn {
+#closeModalBtn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.addModalBtn {
   background-color: #1d6154;
   color: white;
+  width: 280px;
+  height: 45px;
+}
+
+.cardContainerModal {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 20px;
+  gap: 9px;
+}
+
+.cardContainerModal figure {
+  position: relative;
+  width: calc(20% - 9px);
+  box-sizing: border-box;
+}
+
+.cardContainerModal img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.cardContainerModal .delete-button {
+  position: absolute;
+  border-radius: 5px;
+  background-color: black;
+  color: white;
+  top: 5px;
+  right: 5px;
 }
 
 /* CSS des boutons Filtres */

@@ -16,6 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
       })
       .then((data) => {
         cardList = data;
+        createCardsModal();
       })
       .catch((error) => console.log("Error: ", error));
   }
@@ -130,21 +131,71 @@ document.addEventListener("DOMContentLoaded", () => {
   // email: sophie.bluel@test.tld
   // password: S0phie
 
-  console.log("linkLogin classes:", linkLogin.className);
-  console.log("filterContainer classes:", filterContainer.className);
-  console.log("linkLogout classes:", linkLogout.className);
-  console.log("editButton classes:", editButton.className);
-  console.log("editModBar classes:", editModBar.className);
-
   // GESTION DE LA MODAL AJOUT DE PHOTO ------------------------------------------------------------------
 
   const modalOverlay = document.getElementById("modalOverlay");
-  const closeModalIcon = document.getElementById("closeModalIcon");
+  const closeModalBtn = document.getElementById("closeModalBtn");
+  const cardContainerModal = document.getElementById("cardContainerModal");
 
   editButton.addEventListener("click", () => {
     modalOverlay.classList.remove("d-none");
   });
-  closeModalIcon.addEventListener("click", () => {
+  closeModalBtn.addEventListener("click", () => {
     modalOverlay.classList.add("d-none");
   });
+
+  function deleteImage(buttonId) {
+    const imageId = buttonId.replace("deleteButton", "");
+    const deleteUrl = apiUrl + "/" + imageId;
+
+    fetch(deleteUrl, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network error");
+        }
+        // return response.json();
+      })
+      .then(() => {
+        cardList = cardList.filter((item) => item.id !== parseInt(imageId)); // On filtre cardList pour exclure les items dont l'id est égal à la valeur de imageId
+        console.log(`Image with ID ${imageId} deleted successfully.`);
+        createCardsModal(); // Refresh de la modal après la supression d'une image
+        createCards(); // Refresh de l'index après la supression d'une image
+      })
+      .catch((error) => {
+        console.error("Error deleting image", error);
+      });
+  }
+
+  function createCardsModal() {
+    cardContainerModal.innerHTML = "";
+    cardList.forEach((item) => {
+      const figure = document.createElement("figure");
+      const img = document.createElement("img");
+      const deleteButton = document.createElement("button");
+      const deleteIcon = document.createElement("i");
+
+      img.src = item.imageUrl;
+      img.alt = item.title;
+
+      deleteButton.id = `deleteButton${item.id}`;
+      deleteButton.classList.add("delete-button");
+      deleteButton.addEventListener("click", () =>
+        deleteImage(deleteButton.id)
+      );
+
+      deleteIcon.classList.add("fa-solid", "fa-trash-can");
+      deleteButton.appendChild(deleteIcon);
+
+      figure.appendChild(img);
+      figure.appendChild(deleteButton);
+
+      cardContainerModal.appendChild(figure);
+    });
+  }
 });

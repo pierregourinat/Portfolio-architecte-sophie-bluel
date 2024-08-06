@@ -131,19 +131,40 @@ document.addEventListener("DOMContentLoaded", () => {
   // email: sophie.bluel@test.tld
   // password: S0phie
 
-  // GESTION DE LA MODAL AJOUT DE PHOTO ------------------------------------------------------------------
+  // GESTION DE LA MODAL ------------------------------------------------------------------
 
   const modalOverlay = document.getElementById("modalOverlay");
+  const modalWrapper = document.getElementById("modalWrapper");
   const closeModalBtn = document.getElementById("closeModalBtn");
   const cardContainerModal = document.getElementById("cardContainerModal");
+  const addPhotoWrapper = document.getElementById("addPhotoWrapper");
+  const previousArrow = document.getElementById("previousArrow");
 
+  // Event clic bouton "modifier"
   editButton.addEventListener("click", () => {
     modalOverlay.classList.remove("d-none");
   });
+  //Event clic icone cross pour fermer la modale
   closeModalBtn.addEventListener("click", () => {
     modalOverlay.classList.add("d-none");
   });
 
+  addPhotoBtn.addEventListener("click", () => {
+    if (modalWrapper.classList.contains("d-none")) {
+      modalWrapper.classList.remove("d-none");
+      addPhotoWrapper.classList.add("d-none");
+    } else {
+      modalWrapper.classList.add("d-none");
+      addPhotoWrapper.classList.remove("d-none");
+    }
+  });
+
+  previousArrow.addEventListener("click", () => {
+    modalWrapper.classList.remove("d-none");
+    addPhotoWrapper.classList.add("d-none");
+  });
+
+  // Fonction pour la supression des images
   function deleteImage(buttonId) {
     const imageId = buttonId.replace("deleteButton", "");
     const deleteUrl = apiUrl + "/" + imageId;
@@ -162,7 +183,8 @@ document.addEventListener("DOMContentLoaded", () => {
         // return response.json();
       })
       .then(() => {
-        cardList = cardList.filter((item) => item.id !== parseInt(imageId)); // On filtre cardList pour exclure les items dont l'id est égal à la valeur de imageId
+        // On filtre cardList pour exclure les items dont l'id est égal à la valeur de imageId convertie en entier
+        cardList = cardList.filter((item) => item.id !== parseInt(imageId));
         console.log(`Image with ID ${imageId} deleted successfully.`);
         createCardsModal(); // Refresh de la modal après la supression d'une image
         createCards(); // Refresh de l'index après la supression d'une image

@@ -147,8 +147,9 @@ document.addEventListener("DOMContentLoaded", () => {
   //Event clic icone cross pour fermer la modale
   closeModalBtn.addEventListener("click", () => {
     modalOverlay.classList.add("d-none");
+    console.log(closeModalBtn);
   });
-
+  //Event clic sur le bouton "ajouter une photo" pour amener à la page suivante de la modal
   addPhotoBtn.addEventListener("click", () => {
     if (modalWrapper.classList.contains("d-none")) {
       modalWrapper.classList.remove("d-none");
@@ -158,7 +159,7 @@ document.addEventListener("DOMContentLoaded", () => {
       addPhotoWrapper.classList.remove("d-none");
     }
   });
-
+  //Event clic sur la flèche retour en arrière de la 2nde fenetre de la modal
   previousArrow.addEventListener("click", () => {
     modalWrapper.classList.remove("d-none");
     addPhotoWrapper.classList.add("d-none");

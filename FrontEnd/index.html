@@ -82,6 +82,43 @@
                 <i id="previousArrow" class="fa-solid fa-arrow-left"></i>
                 <i id="closeModalBtn" class="fa-solid fa-xmark"></i>
                 <h3>Ajout photo</h3>
+                <form id="uploadForm">
+                  <div class="customFileUploadWrapper">
+                    <label for="photoUpload" class="customFileUpload">
+                      + Ajouter photo
+                      <input
+                        type="file"
+                        id="photoUpload"
+                        name="photoUpload"
+                        accept="image/*"
+                        required
+                      />
+                    </label>
+                    <p>jpg, png : 4mo max</p>
+                  </div>
+                  <label for="title" class="styleLabel">Titre</label>
+                  <input
+                    type="text"
+                    id="title"
+                    class="styleInput"
+                    name="title"
+                    required
+                  />
+                  <label for="category" class="styleLabel">Catégorie</label>
+                  <select
+                    id="category"
+                    class="styleInput"
+                    name="category"
+                    required
+                  >
+                    <option value="objets">Objets</option>
+                    <option value="appartement">Appartements</option>
+                    <option value="hotelsrestaurant">
+                      Hotels & Restaurants
+                    </option>
+                  </select>
+                  <button type="submit" id="validerBtn">Valider</button>
+                </form>
               </div>
             </aside>
           </div>

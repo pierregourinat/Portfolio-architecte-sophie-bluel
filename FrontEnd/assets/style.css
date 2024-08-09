@@ -174,6 +174,7 @@ editButtonContainer {
 }
 
 #editButton {
+  cursor: pointer;
   color: black;
   font-size: 14px;
   background-color: transparent;
@@ -382,6 +383,12 @@ li:hover {
 input[type="file"] {
   display: none;
 }
+
+/* #thumbnailContainer img {
+  max-width: 129px;
+  max-height: 169px;
+  margin-top: 19px;
+} */
 
 .styleLabel {
   font-family: "Work Sans";

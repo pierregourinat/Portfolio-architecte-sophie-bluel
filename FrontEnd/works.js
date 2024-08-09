@@ -181,7 +181,6 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!response.ok) {
           throw new Error("Network error");
         }
-        // return response.json();
       })
       .then(() => {
         // On filtre cardList pour exclure les items dont l'id est égal à la valeur de imageId convertie en entier
@@ -221,4 +220,38 @@ document.addEventListener("DOMContentLoaded", () => {
       cardContainerModal.appendChild(figure);
     });
   }
+
+  // Affichage de la minature lors de l'upload d'une photo
+  const photoUpload = document.getElementById("photoUpload");
+  const customFileUploadLabel = document.querySelector(".customFileUpload");
+  const customFileUploadText = document.querySelector(
+    ".customFileUploadWrapper p"
+  );
+  const thumbnailContainer = document.getElementById("thumbnailContainer");
+
+  photoUpload.addEventListener("change", (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const img = document.createElement("img");
+        img.src = e.target.result;
+        img.style.maxWidth = "129px";
+        img.style.maxHeight = "169px";
+        img.style.marginBottom = "5px";
+        thumbnailContainer.innerHTML = "";
+        thumbnailContainer.parentElement.appendChild(img);
+
+        customFileUploadLabel.classList.add("d-none");
+        customFileUploadText.classList.add("d-none");
+
+        console.log("Nom du fichier:", file.name);
+        console.log("Taille du fichier:", file.size);
+        console.log("Type du fichier:", file.type);
+
+        console.log("La miniature s'affiche", thumbnailContainer.innerHTML);
+      };
+      reader.readAsDataURL(file);
+    }
+  });
 });

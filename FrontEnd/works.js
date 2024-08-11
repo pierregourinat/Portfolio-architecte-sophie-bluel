@@ -261,14 +261,15 @@ document.addEventListener("DOMContentLoaded", () => {
   if (!authToken) {
     console.error("Token d'authentification manquant.");
     alert("Veuillez vous connecter pour ajouter une photo.");
-  } else {
-    console.log("Token d'authentification:", authToken);
+    uploadForm.querySelector("button[type='submit']").disabled = true;
+    return;
   }
 
   uploadForm.addEventListener("submit", async (event) => {
     event.preventDefault();
 
-    const title = document.getElementById("title").value;
+    const formData = new FormData();
+    const title = document.getElementById("title").value.trim();
     const category = parseInt(document.getElementById("category").value, 10);
     const photoUpload = document.getElementById("photoUpload").files[0];
 
@@ -277,38 +278,37 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    const reader = new FileReader();
-    reader.readAsDataURL(photoUpload);
+    if (photoUpload.size > 4 * 1024 * 1024) {
+      // 4MB size limit
+      alert(
+        "La taille de la photo est trop grande. Veuillez sélectionner une image plus petite."
+      );
+      return;
+    }
 
-    reader.onloadend = async () => {
-      const base64Image = reader.result.split(",")[1]; // Obtenir la partie base64 de l'image
+    formData.append("title", title);
+    formData.append("category", category);
+    formData.append("image", photoUpload);
 
-      const data = {
-        title: title,
-        category: category,
-        image: base64Image,
-      };
+    try {
+      const response = await fetch(apiUrl, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        },
+        body: formData,
+      });
 
-      try {
-        const response = await fetch(apiUrl, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${authToken}`,
-          },
-          body: JSON.stringify(data),
-        });
-
-        if (response.ok) {
-          alert("Photo uploadée avec succès!");
-          uploadForm.reset();
-        } else {
-          alert("Erreur lors de l'upload de la photo.");
-        }
-      } catch (error) {
-        console.error("Erreur:", error);
-        alert("Erreur lors de l'upload de la photo.");
+      if (response.ok) {
+        alert("Photo uploadée avec succès!");
+        uploadForm.reset();
+      } else {
+        const errorMessage = `Erreur ${response.status}: ${response.statusText}`;
+        alert(`Erreur lors de l'upload de la photo. ${errorMessage}`);
       }
-    };
+    } catch (error) {
+      console.error("Erreur:", error);
+      alert("Erreur lors de l'upload de la photo.");
+    }
   });
 });

@@ -254,4 +254,61 @@ document.addEventListener("DOMContentLoaded", () => {
       reader.readAsDataURL(file);
     }
   });
+
+  // Envoi d'une photo pour l'ajouter à la galerie
+  const uploadForm = document.getElementById("uploadForm");
+
+  if (!authToken) {
+    console.error("Token d'authentification manquant.");
+    alert("Veuillez vous connecter pour ajouter une photo.");
+  } else {
+    console.log("Token d'authentification:", authToken);
+  }
+
+  uploadForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    const title = document.getElementById("title").value;
+    const category = parseInt(document.getElementById("category").value, 10);
+    const photoUpload = document.getElementById("photoUpload").files[0];
+
+    if (!photoUpload) {
+      alert("Veuillez sélectionner une photo.");
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.readAsDataURL(photoUpload);
+
+    reader.onloadend = async () => {
+      const base64Image = reader.result.split(",")[1]; // Obtenir la partie base64 de l'image
+
+      const data = {
+        title: title,
+        category: category,
+        image: base64Image,
+      };
+
+      try {
+        const response = await fetch(apiUrl, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${authToken}`,
+          },
+          body: JSON.stringify(data),
+        });
+
+        if (response.ok) {
+          alert("Photo uploadée avec succès!");
+          uploadForm.reset();
+        } else {
+          alert("Erreur lors de l'upload de la photo.");
+        }
+      } catch (error) {
+        console.error("Erreur:", error);
+        alert("Erreur lors de l'upload de la photo.");
+      }
+    };
+  });
 });

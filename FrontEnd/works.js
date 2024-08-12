@@ -45,7 +45,6 @@ document.addEventListener("DOMContentLoaded", () => {
       filterButtons.forEach((button) =>
         button.addEventListener("click", () => {
           category = button.textContent;
-          console.log("category updated to :", category);
           filterButtons.forEach((btn) => {
             btn.classList.remove("button_selected");
           });
@@ -127,11 +126,11 @@ document.addEventListener("DOMContentLoaded", () => {
     editModBar.classList.add("d-none");
   }
 
-  // GESTION DE LA MODAL ------------------------------------------------------------------
+  //-----------GESTION DE LA MODAL----------//
 
   const modalOverlay = document.getElementById("modalOverlay");
   const modalWrapper = document.getElementById("modalWrapper");
-  const closeModalBtn = document.getElementById("closeModalBtn");
+  const closeModalBtns = document.querySelectorAll(".closeModalBtn");
   const cardContainerModal = document.getElementById("cardContainerModal");
   const addPhotoWrapper = document.getElementById("addPhotoWrapper");
   const previousArrow = document.getElementById("previousArrow");
@@ -141,9 +140,10 @@ document.addEventListener("DOMContentLoaded", () => {
     modalOverlay.classList.remove("d-none");
   });
   //Event clic icone cross pour fermer la modale
-  closeModalBtn.addEventListener("click", () => {
-    modalOverlay.classList.add("d-none");
-    console.log(closeModalBtn);
+  closeModalBtns.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      modalOverlay.classList.add("d-none");
+    });
   });
   //Event clic sur le bouton "ajouter une photo" pour amener à la page suivante de la modal
   addPhotoBtn.addEventListener("click", () => {
@@ -181,7 +181,6 @@ document.addEventListener("DOMContentLoaded", () => {
       .then(() => {
         // On filtre cardList pour exclure les items dont l'id est égal à la valeur de imageId convertie en entier
         cardList = cardList.filter((item) => item.id !== parseInt(imageId));
-        console.log(`Image with ID ${imageId} deleted successfully.`);
         createCardsModal(); // Refresh de la modal après la supression d'une image
         createCards(); // Refresh de l'index après la supression d'une image
       })
@@ -240,12 +239,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         customFileUploadLabel.classList.add("d-none");
         customFileUploadText.classList.add("d-none");
-
-        console.log("Nom du fichier:", file.name);
-        console.log("Taille du fichier:", file.size);
-        console.log("Type du fichier:", file.type);
-
-        console.log("La miniature s'affiche", thumbnailContainer.innerHTML);
       };
       reader.readAsDataURL(file);
     }
@@ -255,10 +248,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const uploadForm = document.getElementById("uploadForm");
 
   if (!authToken) {
-    console.error("Token d'authentification manquant.");
-    alert("Veuillez vous connecter pour ajouter une photo.");
     uploadForm.querySelector("button[type='submit']").disabled = true;
-    return;
   }
 
   uploadForm.addEventListener("submit", async (event) => {
@@ -268,11 +258,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const title = document.getElementById("title").value.trim();
     const category = parseInt(document.getElementById("category").value, 10);
     const photoUpload = document.getElementById("photoUpload").files[0];
-
-    if (!photoUpload) {
-      alert("Veuillez sélectionner une photo.");
-      return;
-    }
 
     // Réglage de la taille de la photo
     if (photoUpload.size > 4 * 1024 * 1024) {
@@ -297,7 +282,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (response.ok) {
         const newPhoto = await response.json(); // On s'assure que l'API renvoie les détails de la nouvelle photo
-        alert("Photo uploadée avec succès!");
         uploadForm.reset();
 
         cardList.push(newPhoto); // Ajouter la nouvelle photo à la liste des cartes
@@ -311,7 +295,29 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     } catch (error) {
       console.error("Erreur:", error);
-      alert("Erreur lors de l'upload de la photo.");
     }
   });
+
+  const validerBtn = document.getElementById("validerBtn");
+  const titleInput = document.getElementById("title");
+  const categoryInput = document.getElementById("category");
+  const photoUploadInput = document.getElementById("photoUpload");
+
+  // Fonction pour vérifier si tous les champs sont remplis
+  function checkFormValidity() {
+    const title = titleInput.value.trim();
+    const category = categoryInput.value.trim();
+    const photoUpload = photoUploadInput.files[0];
+
+    if (title && category && photoUpload) {
+      validerBtn.style.backgroundColor = "#1D6154";
+    } else {
+      validerBtn.style.backgroundColor = ""; // Réinitialiser la couleur de fond
+    }
+  }
+
+  // Ecouteurs d'événements aux champs pour vérifier les changements
+  titleInput.addEventListener("input", checkFormValidity);
+  categoryInput.addEventListener("input", checkFormValidity);
+  photoUploadInput.addEventListener("change", checkFormValidity);
 });

@@ -24,129 +24,136 @@
       <i class="fa-regular fa-pen-to-square"></i>
       <p>Mode édition</p>
     </div>
-    <header>
-      <h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
-      <nav>
-        <ul>
-          <li>projets</li>
-          <li>contact</li>
-          <li id="linkLogin"><a href="./login.html">login</a></li>
-          <li id="linkLogout" class="d-none">logout</li>
-          <li><img src="./assets/icons/instagram.png" alt="Instagram" /></li>
-        </ul>
-      </nav>
-    </header>
-    <main>
-      <section id="introduction">
-        <figure>
-          <img src="./assets/images/sophie-bluel.png" alt="" />
-        </figure>
-        <article>
-          <h2>Designer d'espace</h2>
-          <p>
-            Je raconte votre histoire, je valorise vos idées. Je vous accompagne
-            de la conception à la livraison finale du chantier.
-          </p>
-          <p>
-            Chaque projet sera étudié en commun, de façon à mettre en valeur les
-            volumes, les matières et les couleurs dans le respect de l’esprit
-            des lieux et le choix adapté des matériaux. Le suivi du chantier
-            sera assuré dans le souci du détail, le respect du planning et du
-            budget.
-          </p>
-          <p>
-            En cas de besoin, une équipe pluridisciplinaire peut-être constituée
-            : architecte DPLG, décorateur(trice)
-          </p>
-        </article>
-      </section>
-      <section id="portfolio">
-        <div id="headerGallery">
-          <h2>Mes Projets</h2>
-          <div id="editButtonContainer">
-            <i
-              class="fa-regular fa-pen-to-square d-none"
-              id="editButtonIcon"
-            ></i>
-            <button id="editButton" class="d-none">modifier</button>
-            <aside id="modalOverlay" class="modal d-none">
-              <div id="modalWrapper" class="modalWrapper">
-                <i id="closeModalBtn" class="fa-solid fa-xmark"></i>
-                <h3>Galerie photo</h3>
-                <div id="cardContainerModal" class="cardContainerModal"></div>
-                <button id="addPhotoBtn" class="addPhotoBtn">
-                  Ajouter une photo
-                </button>
-              </div>
-              <div id="addPhotoWrapper" class="addPhotoWrapper d-none">
-                <i id="previousArrow" class="fa-solid fa-arrow-left"></i>
-                <i id="closeModalBtn" class="fa-solid fa-xmark"></i>
-                <h3>Ajout photo</h3>
-                <form id="uploadForm">
-                  <div class="customFileUploadWrapper">
-                    <label for="photoUpload" class="customFileUpload">
-                      + Ajouter photo
-                      <input
-                        type="file"
-                        id="photoUpload"
-                        name="photoUpload"
-                        accept="image/*"
-                        required
-                      />
-                    </label>
-                    <p>jpg, png : 4mo max</p>
-                    <div id="thumbnailContainer"></div>
-                  </div>
-                  <label for="title" class="styleLabel">Titre</label>
-                  <input
-                    type="text"
-                    id="title"
-                    class="styleInput"
-                    name="title"
-                    required
-                  />
-                  <label for="category" class="styleLabel">Catégorie</label>
-                  <select
-                    id="category"
-                    class="styleInput"
-                    name="category"
-                    required
-                  >
-                    <option value="1">Objets</option>
-                    <option value="2">Appartements</option>
-                    <option value="3">Hotels & Restaurants</option>
-                  </select>
-                  <button type="submit" id="validerBtn">Valider</button>
-                </form>
-              </div>
-            </aside>
+    <div class="pageContainer">
+      <header>
+        <h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
+        <nav>
+          <ul>
+            <li>projets</li>
+            <li>contact</li>
+            <li id="linkLogin"><a href="./login.html">login</a></li>
+            <li id="linkLogout" class="d-none">logout</li>
+            <li><img src="./assets/icons/instagram.png" alt="Instagram" /></li>
+          </ul>
+        </nav>
+      </header>
+      <main>
+        <section id="introduction">
+          <figure>
+            <img src="./assets/images/sophie-bluel.png" alt="" />
+          </figure>
+          <article>
+            <h2>Designer d'espace</h2>
+            <p>
+              Je raconte votre histoire, je valorise vos idées. Je vous
+              accompagne de la conception à la livraison finale du chantier.
+            </p>
+            <p>
+              Chaque projet sera étudié en commun, de façon à mettre en valeur
+              les volumes, les matières et les couleurs dans le respect de
+              l’esprit des lieux et le choix adapté des matériaux. Le suivi du
+              chantier sera assuré dans le souci du détail, le respect du
+              planning et du budget.
+            </p>
+            <p>
+              En cas de besoin, une équipe pluridisciplinaire peut-être
+              constituée : architecte DPLG, décorateur(trice)
+            </p>
+          </article>
+        </section>
+        <section id="portfolio">
+          <div id="headerGallery">
+            <h2>Mes Projets</h2>
+            <div id="editButtonContainer">
+              <i
+                class="fa-regular fa-pen-to-square d-none"
+                id="editButtonIcon"
+              ></i>
+              <button id="editButton" class="d-none">modifier</button>
+              <aside id="modalOverlay" class="modal d-none">
+                <div id="modalWrapper" class="modalWrapper">
+                  <i id="closeModalBtn" class="fa-solid fa-xmark"></i>
+                  <h3>Galerie photo</h3>
+                  <div id="cardContainerModal" class="cardContainerModal"></div>
+                  <button id="addPhotoBtn" class="addPhotoBtn">
+                    Ajouter une photo
+                  </button>
+                </div>
+                <div id="addPhotoWrapper" class="addPhotoWrapper d-none">
+                  <i id="previousArrow" class="fa-solid fa-arrow-left"></i>
+                  <i id="closeModalBtn" class="fa-solid fa-xmark"></i>
+                  <h3>Ajout photo</h3>
+                  <form id="uploadForm">
+                    <div class="customFileUploadWrapper">
+                      <label for="photoUpload" class="customFileUpload">
+                        + Ajouter photo
+                        <input
+                          type="file"
+                          id="photoUpload"
+                          name="photoUpload"
+                          accept="image/*"
+                          required
+                        />
+                      </label>
+                      <p>jpg, png : 4mo max</p>
+                      <div id="thumbnailContainer"></div>
+                    </div>
+                    <label for="title" class="styleLabel">Titre</label>
+                    <input
+                      type="text"
+                      id="title"
+                      class="styleInput"
+                      name="title"
+                      required
+                    />
+                    <label for="category" class="styleLabel">Catégorie</label>
+                    <select
+                      id="category"
+                      class="styleInput"
+                      name="category"
+                      required
+                    >
+                      <option value="1">Objets</option>
+                      <option value="2">Appartements</option>
+                      <option value="3">Hotels & Restaurants</option>
+                    </select>
+                    <button type="submit" id="validerBtn">Valider</button>
+                  </form>
+                </div>
+              </aside>
+            </div>
           </div>
-        </div>
-        <div id="filterContainer">
-          <button class="button_selected" id="button0">Tous</button>
-        </div>
-        <div class="gallery" id="cardContainer"></div>
-      </section>
-      <section id="contact">
-        <h2>Contact</h2>
-        <p>Vous avez un projet ? Discutons-en !</p>
-        <form action="#" method="post">
-          <label for="name">Nom</label>
-          <input type="text" name="name" id="name" />
-          <label for="email">Email</label>
-          <input type="email" name="email" id="email" />
-          <label for="message">Message</label>
-          <textarea name="message" id="message" cols="30" rows="10"></textarea>
-          <input type="submit" value="Envoyer" />
-        </form>
-      </section>
-    </main>
-    <footer>
-      <nav>
-        <ul>
-          <li>Mentions Légales</li>
-        </ul>
-      </nav>
-    </footer>
+          <div id="filterContainer">
+            <button class="button_selected" id="button0">Tous</button>
+          </div>
+          <div class="gallery" id="cardContainer"></div>
+        </section>
+        <section id="contact">
+          <h2>Contact</h2>
+          <p>Vous avez un projet ? Discutons-en !</p>
+          <form action="#" method="post">
+            <label for="name">Nom</label>
+            <input type="text" name="name" id="name" />
+            <label for="email">Email</label>
+            <input type="email" name="email" id="email" />
+            <label for="message">Message</label>
+            <textarea
+              name="message"
+              id="message"
+              cols="30"
+              rows="10"
+            ></textarea>
+            <input type="submit" value="Envoyer" />
+          </form>
+        </section>
+      </main>
+      <footer>
+        <nav>
+          <ul>
+            <li>Mentions Légales</li>
+          </ul>
+        </nav>
+      </footer>
+    </div>
   </body>
 </html>

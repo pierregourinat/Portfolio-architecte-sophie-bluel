@@ -127,10 +127,6 @@ document.addEventListener("DOMContentLoaded", () => {
     editModBar.classList.add("d-none");
   }
 
-  // IDENTIFIANTS
-  // email: sophie.bluel@test.tld
-  // password: S0phie
-
   // GESTION DE LA MODAL ------------------------------------------------------------------
 
   const modalOverlay = document.getElementById("modalOverlay");

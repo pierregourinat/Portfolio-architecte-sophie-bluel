@@ -140,10 +140,13 @@ table {
 }
 /** end reset css**/
 body {
-  max-width: 1140px;
-  margin: auto;
   font-family: "Work Sans";
   font-size: 14px;
+}
+
+.pageContainer {
+  max-width: 1140px;
+  margin: auto;
 }
 
 #bodyLogin {
@@ -294,6 +297,7 @@ li:hover {
 }
 
 #closeModalBtn {
+  font-size: 20px;
   cursor: pointer;
   position: absolute;
   top: 10px;
@@ -301,6 +305,7 @@ li:hover {
 }
 
 #previousArrow {
+  font-size: 20px;
   cursor: pointer;
   position: absolute;
   top: 10px;

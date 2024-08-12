@@ -278,8 +278,8 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
+    // Réglage de la taille de la photo
     if (photoUpload.size > 4 * 1024 * 1024) {
-      // 4MB size limit
       alert(
         "La taille de la photo est trop grande. Veuillez sélectionner une image plus petite."
       );
@@ -300,8 +300,15 @@ document.addEventListener("DOMContentLoaded", () => {
       });
 
       if (response.ok) {
+        const newPhoto = await response.json(); // On s'assure que l'API renvoie les détails de la nouvelle photo
         alert("Photo uploadée avec succès!");
         uploadForm.reset();
+
+        cardList.push(newPhoto); // Ajouter la nouvelle photo à la liste des cartes
+
+        createCards(); // Mettre à jour la galerie
+
+        createCardsModal(); // Mettre à jour la galerie dans la modal
       } else {
         const errorMessage = `Erreur ${response.status}: ${response.statusText}`;
         alert(`Erreur lors de l'upload de la photo. ${errorMessage}`);

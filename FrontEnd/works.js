@@ -6,21 +6,22 @@ document.addEventListener("DOMContentLoaded", () => {
   let category = "";
   let cardList = [];
 
-  if (cardList) {
-    fetch(apiUrl)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network error");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        cardList = data;
-        createCardsModal();
-      })
-      .catch((error) => console.log("Error: ", error));
-  }
+  // Appel à l'API et récupération des travaux
+  fetch(apiUrl)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Network error");
+      }
+      return response.json();
+    })
+    .then((data) => {
+      cardList = data;
+      createCards(); // Initialisation des cartes
+      createCardsModal(); // Initialisation des cartes de la modal
+    })
+    .catch((error) => console.log("Error: ", error));
 
+  // Appel les catégories de l'API
   fetch(apiCategories)
     .then((response) => {
       if (!response.ok) {
@@ -68,6 +69,7 @@ document.addEventListener("DOMContentLoaded", () => {
     })
     .catch((error) => console.log("Error: ", error));
 
+  // Fonction pour afficher les travaux
   function createCards() {
     let filteredData = [];
     if (category) {

@@ -3,8 +3,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const apiUrl = "http://localhost:5678/api/works";
   const cardContainer = document.getElementById("cardContainer");
   const filterContainer = document.getElementById("filterContainer");
-  let category = "";
-  let cardList = [];
+  let category = ""; // Stockage la catégorie actuellement sélectionnée par l'utilisateur
+  let cardList = []; // Stockage de la liste complète des travaux récupérés depuis l'API
 
   // Appel à l'API et récupération des travaux
   fetch(apiUrl)
@@ -248,10 +248,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Envoi d'une photo pour l'ajouter à la galerie
   const uploadForm = document.getElementById("uploadForm");
-
-  if (!authToken) {
-    uploadForm.querySelector("button[type='submit']").disabled = true;
-  }
 
   uploadForm.addEventListener("submit", async (event) => {
     event.preventDefault();

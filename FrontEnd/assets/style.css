@@ -338,6 +338,7 @@ li:hover {
   width: 100%;
   height: auto;
   display: block;
+  height: 100%;
 }
 
 .cardContainerModal .delete-button {
@@ -460,6 +461,7 @@ button {
 
 .gallery img {
   width: 100%;
+  height: 100%;
 }
 #contact {
   width: 50%;
@@ -493,6 +495,7 @@ button {
 }
 
 input[type="submit"] {
+  cursor: pointer;
   font-family: "Syne";
   font-weight: 700;
   color: white;

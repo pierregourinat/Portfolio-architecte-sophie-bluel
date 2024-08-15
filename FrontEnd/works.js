@@ -235,7 +235,7 @@ document.addEventListener("DOMContentLoaded", () => {
         img.src = e.target.result;
         img.style.maxWidth = "129px";
         img.style.maxHeight = "169px";
-        img.style.marginBottom = "5px";
+        img.style.marginBottom = "10px";
         thumbnailContainer.innerHTML = "";
         thumbnailContainer.parentElement.appendChild(img);
 
@@ -256,12 +256,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const title = document.getElementById("title").value.trim();
     const category = parseInt(document.getElementById("category").value, 10);
     const photoUpload = document.getElementById("photoUpload").files[0];
+    const errorMessage = document.getElementById("error_message");
+    const errorMessageSubmit = document.getElementById("error_messageSubmit");
 
     // Réglage de la taille de la photo
     if (photoUpload.size > 4 * 1024 * 1024) {
-      alert(
-        "La taille de la photo est trop grande. Veuillez sélectionner une image plus petite."
-      );
+      errorMessage.textContent =
+        "La taille de la photo est trop grande. Veuillez sélectionner une image plus petite.";
       return;
     }
 
@@ -288,8 +289,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         createCardsModal(); // Mettre à jour la galerie dans la modal
       } else {
-        const errorMessage = `Erreur ${response.status}: ${response.statusText}`;
-        alert(`Erreur lors de l'upload de la photo. ${errorMessage}`);
+        const errorMessageText = `Erreur ${response.status}: ${response.statusText}`;
+        errorMessageSubmit.textContent = `Erreur lors de l'upload de la photo. ${errorMessageText}`;
       }
     } catch (error) {
       console.error("Erreur:", error);

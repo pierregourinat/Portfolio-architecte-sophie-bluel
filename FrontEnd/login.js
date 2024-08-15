@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   const apiLogin = "http://localhost:5678/api/users/login";
   const formLogin = document.getElementById("formLogin");
-  console.log(formLogin);
+  const errorMessage = document.getElementById("error_message");
 
   formLogin.addEventListener("submit", (event) => {
     event.preventDefault();
@@ -27,12 +27,14 @@ document.addEventListener("DOMContentLoaded", () => {
           localStorage.setItem("authToken", data.token);
           window.location.href = "index.html";
         } else {
-          alert("Erreur de connexion. Veuillez vérifier vos identifiants");
+          errorMessage.textContent =
+            "Erreur de connexion. Veuillez vérifier vos identifiants";
         }
       })
       .catch((error) => {
         console.error("Erreur lors de la connexion:", error);
-        alert("Erreur lors de la connexion. Veuillez réessayer.");
+        errorMessage.textContent =
+          "Erreur de connexion. Veuillez vérifier vos identifiants";
       });
   });
 });

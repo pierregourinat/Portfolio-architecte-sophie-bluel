@@ -237,7 +237,7 @@ document.addEventListener("DOMContentLoaded", () => {
         img.style.maxHeight = "169px";
         img.style.marginBottom = "10px";
         thumbnailContainer.innerHTML = "";
-        thumbnailContainer.parentElement.appendChild(img);
+        thumbnailContainer.appendChild(img);
 
         customFileUploadLabel.classList.add("d-none");
         customFileUploadText.classList.add("d-none");
@@ -281,16 +281,36 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (response.ok) {
         const newPhoto = await response.json(); // On s'assure que l'API renvoie les détails de la nouvelle photo
+
+        // Réinitialiser le formulaire
         uploadForm.reset();
 
-        cardList.push(newPhoto); // Ajouter la nouvelle photo à la liste des cartes
+        // Réinitialiser l'input de type file manuellement
+        photoUpload.value = "";
 
-        createCards(); // Mettre à jour la galerie
+        // Réinitialiser les messages d'erreur
+        errorMessage.textContent = "";
+        errorMessageSubmit.textContent = "";
 
-        createCardsModal(); // Mettre à jour la galerie dans la modal
+        // Réinitialiser la miniature
+        thumbnailContainer.innerHTML = "";
+        customFileUploadLabel.classList.remove("d-none");
+        customFileUploadText.classList.remove("d-none");
+
+        // Ajouter la nouvelle photo à la liste des cartes
+        cardList.push(newPhoto);
+
+        // Mettre à jour la galerie
+        createCards();
+
+        // Mettre à jour la galerie dans la modal
+        createCardsModal();
+
+        console.log("Formulaire réinitialisé avec succès.");
       } else {
         const errorMessageText = `Erreur ${response.status}: ${response.statusText}`;
         errorMessageSubmit.textContent = `Erreur lors de l'upload de la photo. ${errorMessageText}`;
+        console.error("Erreur lors de l'upload de la photo:", errorMessageText);
       }
     } catch (error) {
       console.error("Erreur:", error);
